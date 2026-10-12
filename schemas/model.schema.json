@@ -1,0 +1,461 @@
+{
+  "$defs": {
+    "BenchmarkStatus": {
+      "enum": [
+        "not-started",
+        "in-progress",
+        "complete"
+      ],
+      "title": "BenchmarkStatus",
+      "type": "string"
+    },
+    "CybershuttleConfig": {
+      "properties": {
+        "enabled": {
+          "default": false,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "workflow_templates": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Workflow Templates"
+        }
+      },
+      "title": "CybershuttleConfig",
+      "type": "object"
+    },
+    "DatasetRef": {
+      "additionalProperties": true,
+      "properties": {
+        "recommended": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Recommended dataset IDs",
+          "title": "Recommended"
+        },
+        "supported": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Known-compatible dataset IDs",
+          "title": "Supported"
+        }
+      },
+      "title": "DatasetRef",
+      "type": "object"
+    },
+    "LifecycleConfig": {
+      "properties": {
+        "supported_stages": {
+          "description": "Task types this model supports",
+          "items": {
+            "$ref": "#/$defs/TaskType"
+          },
+          "title": "Supported Stages",
+          "type": "array"
+        }
+      },
+      "required": [
+        "supported_stages"
+      ],
+      "title": "LifecycleConfig",
+      "type": "object"
+    },
+    "LifecycleStatus": {
+      "enum": [
+        "candidate",
+        "registered",
+        "containerized",
+        "nexus-tested",
+        "benchmarked",
+        "optimized",
+        "cybershuttle-ready",
+        "production"
+      ],
+      "title": "LifecycleStatus",
+      "type": "string"
+    },
+    "MaintainerEntry": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "github": {
+          "title": "Github",
+          "type": "string"
+        },
+        "affiliation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Affiliation"
+        }
+      },
+      "required": [
+        "name",
+        "github"
+      ],
+      "title": "MaintainerEntry",
+      "type": "object"
+    },
+    "NexusValidation": {
+      "enum": [
+        "untested",
+        "in-progress",
+        "passed",
+        "failed"
+      ],
+      "title": "NexusValidation",
+      "type": "string"
+    },
+    "OptimizationStatus": {
+      "enum": [
+        "not-started",
+        "in-progress",
+        "complete"
+      ],
+      "title": "OptimizationStatus",
+      "type": "string"
+    },
+    "ReadinessStatus": {
+      "additionalProperties": true,
+      "properties": {
+        "registry_status": {
+          "$ref": "#/$defs/LifecycleStatus",
+          "default": "candidate",
+          "description": "Current lifecycle stage"
+        },
+        "nexus_validation": {
+          "$ref": "#/$defs/NexusValidation",
+          "default": "untested"
+        },
+        "benchmark_status": {
+          "$ref": "#/$defs/BenchmarkStatus",
+          "default": "not-started"
+        },
+        "optimization_status": {
+          "$ref": "#/$defs/OptimizationStatus",
+          "default": "not-started"
+        },
+        "workflow_status": {
+          "$ref": "#/$defs/WorkflowStatus",
+          "default": "candidate"
+        }
+      },
+      "title": "ReadinessStatus",
+      "type": "object"
+    },
+    "TaskType": {
+      "enum": [
+        "inference",
+        "fine-tuning",
+        "training",
+        "evaluation",
+        "deployment",
+        "benchmarking"
+      ],
+      "title": "TaskType",
+      "type": "string"
+    },
+    "UpstreamSources": {
+      "additionalProperties": true,
+      "properties": {
+        "huggingface": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "HuggingFace model ID, e.g. ibm/MoLFormer-XL-both-10pct",
+          "title": "Huggingface"
+        },
+        "github": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "GitHub repository URL",
+          "title": "Github"
+        },
+        "paper": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "arXiv or DOI URL for the primary paper",
+          "title": "Paper"
+        },
+        "ngc": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "NVIDIA NGC model URL",
+          "title": "Ngc"
+        },
+        "bionemo": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "BioNeMo Framework model reference",
+          "title": "Bionemo"
+        },
+        "other": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Any other upstream references",
+          "title": "Other"
+        }
+      },
+      "title": "UpstreamSources",
+      "type": "object"
+    },
+    "WorkflowStatus": {
+      "enum": [
+        "candidate",
+        "draft",
+        "validated",
+        "production"
+      ],
+      "title": "WorkflowStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": true,
+  "description": "Schema for registry/models/<domain>/<model-id>/model.yaml",
+  "properties": {
+    "$schema_version": {
+      "default": "1.0",
+      "description": "Schema version, not the $schema header (that is added by YAML tooling)",
+      "title": "$Schema Version",
+      "type": "string"
+    },
+    "id": {
+      "description": "Unique model identifier, lowercase, hyphen-separated",
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "description": "Human-readable model name",
+      "title": "Name",
+      "type": "string"
+    },
+    "description": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Short description (1-2 sentences)",
+      "title": "Description"
+    },
+    "domain": {
+      "description": "Scientific domain(s)",
+      "items": {
+        "type": "string"
+      },
+      "title": "Domain",
+      "type": "array"
+    },
+    "model_family": {
+      "description": "Model architecture / family tags",
+      "items": {
+        "type": "string"
+      },
+      "title": "Model Family",
+      "type": "array"
+    },
+    "tasks": {
+      "description": "Supported task types",
+      "items": {
+        "$ref": "#/$defs/TaskType"
+      },
+      "title": "Tasks",
+      "type": "array"
+    },
+    "upstream": {
+      "$ref": "#/$defs/UpstreamSources"
+    },
+    "lifecycle": {
+      "$ref": "#/$defs/LifecycleConfig"
+    },
+    "datasets": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/DatasetRef"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "resource_profiles": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Keys: recommended, supported. Values: paths to resource profile YAML files.",
+      "title": "Resource Profiles"
+    },
+    "optimization_profiles": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Keys: recommended, supported. Values: paths to optimization profile YAML files.",
+      "title": "Optimization Profiles"
+    },
+    "cybershuttle": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CybershuttleConfig"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "readiness": {
+      "$ref": "#/$defs/ReadinessStatus"
+    },
+    "maintainers": {
+      "anyOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/MaintainerEntry"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Maintainers"
+    },
+    "notes": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "domain",
+    "model_family",
+    "tasks",
+    "upstream",
+    "lifecycle"
+  ],
+  "title": "ModelSchema",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

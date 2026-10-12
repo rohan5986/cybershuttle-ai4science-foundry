@@ -1,0 +1,5 @@
+JobID                       JobName      State    Elapsed     MaxRSS  MaxVMSize ExitCode
+------------ ---------------------- ---------- ---------- ---------- ---------- --------
+6197584      satmae-temporal-subset  COMPLETED   00:01:21                            0:0
+6197584.batch                 batch  COMPLETED   00:01:21  16070244K          0      0:0
+6197584.extern               extern  COMPLETED   00:01:25                            0:0

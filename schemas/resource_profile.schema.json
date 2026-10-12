@@ -1,0 +1,225 @@
+{
+  "$defs": {
+    "CPUSpec": {
+      "properties": {
+        "cores": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cores"
+        },
+        "ram_gb": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Ram Gb"
+        }
+      },
+      "title": "CPUSpec",
+      "type": "object"
+    },
+    "GPUSpec": {
+      "properties": {
+        "model": {
+          "description": "GPU model, e.g. NVIDIA B200, NVIDIA RTX 6000 Ada",
+          "title": "Model",
+          "type": "string"
+        },
+        "count": {
+          "minimum": 1,
+          "title": "Count",
+          "type": "integer"
+        },
+        "vram_gb": {
+          "description": "VRAM per GPU in GB",
+          "minimum": 0,
+          "title": "Vram Gb",
+          "type": "number"
+        },
+        "interconnect": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "e.g. NVLink, PCIe",
+          "title": "Interconnect"
+        }
+      },
+      "required": [
+        "model",
+        "count",
+        "vram_gb"
+      ],
+      "title": "GPUSpec",
+      "type": "object"
+    },
+    "StorageSpec": {
+      "properties": {
+        "local_ssd_gb": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Local Ssd Gb"
+        },
+        "scratch_gb": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Scratch Gb"
+        },
+        "parallel_fs": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "e.g. GPFS, Lustre, NFS",
+          "title": "Parallel Fs"
+        }
+      },
+      "title": "StorageSpec",
+      "type": "object"
+    }
+  },
+  "additionalProperties": true,
+  "description": "Schema for resource-profiles/<system>/<profile-id>.yaml",
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "system": {
+      "description": "System name, e.g. nexus, google-tpu, access-delta",
+      "title": "System",
+      "type": "string"
+    },
+    "partition": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "HPC partition or queue name",
+      "title": "Partition"
+    },
+    "gpu": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GPUSpec"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "cpu": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/CPUSpec"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "storage": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/StorageSpec"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "max_walltime_hours": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Max Walltime Hours"
+    },
+    "scheduler": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "e.g. slurm, pbs, kubernetes",
+      "title": "Scheduler"
+    },
+    "notes": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Notes"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "system"
+  ],
+  "title": "ResourceProfileSchema",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

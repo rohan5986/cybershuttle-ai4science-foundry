@@ -1,0 +1,56 @@
+{
+  "$defs": {
+    "TaskType": {
+      "enum": [
+        "inference",
+        "fine-tuning",
+        "training",
+        "evaluation",
+        "deployment",
+        "benchmarking"
+      ],
+      "title": "TaskType",
+      "type": "string"
+    }
+  },
+  "additionalProperties": true,
+  "description": "Schema for recipes/*.yaml",
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "model": {
+      "title": "Model",
+      "type": "string"
+    },
+    "task": {
+      "$ref": "#/$defs/TaskType"
+    },
+    "description": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Description"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "model",
+    "task"
+  ],
+  "title": "ExecutionRecipeSchema",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

@@ -11,7 +11,12 @@ Output goes to schemas/. Never edit those files by hand.
 import json
 from pathlib import Path
 
-from tools.schemas.schemas import ModelSchema, ResourceProfileSchema
+from tools.schemas.schemas import (
+    BenchmarkSchema,
+    ExecutionRecipeSchema,
+    ModelSchema,
+    ResourceProfileSchema,
+)
 
 SCHEMA_DIR = Path("schemas")
 SCHEMA_DIR.mkdir(exist_ok=True)
@@ -19,6 +24,8 @@ SCHEMA_DIR.mkdir(exist_ok=True)
 MODELS = [
     (ModelSchema, "model.schema.json"),
     (ResourceProfileSchema, "resource_profile.schema.json"),
+    (ExecutionRecipeSchema, "execution_recipe.schema.json"),
+    (BenchmarkSchema, "benchmark.schema.json"),
 ]
 
 for model_cls, filename in MODELS:

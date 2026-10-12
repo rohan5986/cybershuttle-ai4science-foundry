@@ -78,6 +78,8 @@ class UpstreamSources(BaseModel):
     bionemo: Optional[str] = Field(None, description="BioNeMo Framework model reference")
     other: Optional[list[str]] = Field(None, description="Any other upstream references")
 
+    model_config = {"extra": "allow"}
+
 
 class LifecycleConfig(BaseModel):
     supported_stages: list[TaskType] = Field(
@@ -88,6 +90,8 @@ class LifecycleConfig(BaseModel):
 class DatasetRef(BaseModel):
     recommended: Optional[list[str]] = Field(None, description="Recommended dataset IDs")
     supported: Optional[list[str]] = Field(None, description="Known-compatible dataset IDs")
+
+    model_config = {"extra": "allow"}
 
 
 class ReadinessStatus(BaseModel):
@@ -107,6 +111,8 @@ class ReadinessStatus(BaseModel):
     workflow_status: WorkflowStatus = Field(
         default=WorkflowStatus.candidate
     )
+
+    model_config = {"extra": "allow"}
 
 
 class CybershuttleConfig(BaseModel):
@@ -151,7 +157,7 @@ class ModelSchema(BaseModel):
     maintainers: Optional[list[MaintainerEntry]] = None
     notes: Optional[str] = None
 
-    model_config = {"populate_by_name": True}
+    model_config = {"populate_by_name": True, "extra": "allow"}
 
 
 # ---------------------------------------------------------------------------
@@ -190,3 +196,34 @@ class ResourceProfileSchema(BaseModel):
     max_walltime_hours: Optional[float] = None
     scheduler: Optional[str] = Field(None, description="e.g. slurm, pbs, kubernetes")
     notes: Optional[str] = None
+
+    model_config = {"extra": "allow"}
+
+
+# ---------------------------------------------------------------------------
+# execution_recipe.schema.json / benchmark.schema.json
+# ---------------------------------------------------------------------------
+# Foundry YAML already references these files, but they were never generated.
+# Keep them permissive so recipe/benchmark documents can carry run-specific
+# fields without a full schema redesign.
+
+class ExecutionRecipeSchema(BaseModel):
+    """Schema for recipes/*.yaml"""
+    id: str
+    name: str
+    model: str
+    task: TaskType
+    description: Optional[str] = None
+
+    model_config = {"extra": "allow"}
+
+
+class BenchmarkSchema(BaseModel):
+    """Schema for benchmarks/results/**/*.yaml"""
+    id: str
+    name: str
+    model: str
+    status: Optional[str] = None
+    description: Optional[str] = None
+
+    model_config = {"extra": "allow"}
