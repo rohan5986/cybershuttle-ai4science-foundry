@@ -27,7 +27,14 @@ from PIL import Image
 
 HLS_MEAN = [1087.0, 1342.0, 1433.0, 2734.0, 1958.0, 1363.0]
 HLS_STD = [2248.0, 2179.0, 2178.0, 1850.0, 1242.0, 1049.0]
-BACKBONE = "prithvi_eo_v2_300m"
+# TerraTorch 1.2 registers these as terratorch_prithvi_eo_v2_* (HF card
+# names without the prefix fail with "could not be instantiated").
+BACKBONE_CANDIDATES = [
+    "terratorch_prithvi_eo_v2_300",
+    "prithvi_eo_v2_300m",
+    "prithvi_eo_v2_300",
+]
+BACKBONE = BACKBONE_CANDIDATES[0]
 
 
 def _record(step: str, **kwargs):
@@ -88,11 +95,24 @@ def main() -> None:
         evidence["device"] = str(device)
         evidence["torch"] = torch.__version__
         evidence["cuda"] = torch.version.cuda
-        model = BACKBONE_REGISTRY.build(BACKBONE, pretrained=True)
+        model = None
+        last_err = None
+        loaded_name = BACKBONE_CANDIDATES[0]
+        for name in BACKBONE_CANDIDATES:
+            try:
+                model = BACKBONE_REGISTRY.build(name, pretrained=True)
+                loaded_name = name
+                evidence["model"] = name
+                break
+            except Exception as exc:  # noqa: BLE001
+                last_err = f"{name}: {exc}"
+                evidence["steps"].append(_record("load_try", ok=False, backbone=name, error=str(exc)[:300]))
+        if model is None:
+            raise RuntimeError(last_err or "no backbone candidate loaded")
         model = model.to(device).eval()
         n_params = sum(p.numel() for p in model.parameters())
         evidence["steps"].append(
-            _record("load", ok=True, n_params=n_params, backbone=BACKBONE)
+            _record("load", ok=True, n_params=n_params, backbone=loaded_name)
         )
         save()
     except Exception as exc:
