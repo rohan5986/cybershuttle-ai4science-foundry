@@ -1,0 +1,1 @@
+Disabling torch because diffusers requires `torch>=2.6` but found version 2.5.1+cu121. Upgrade it with `pip install -U 'torch>=2.6'`.
