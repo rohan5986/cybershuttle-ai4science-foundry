@@ -10,6 +10,9 @@ logs/*_versions.txt
 logs/*_sacct.txt
 logs/*_walltime.txt
 
+# Local YAML-language-server stubs. Foundry does not ship schemas/.
+schemas/
+
 # Do not commit weights, imagery, or conda prefixes
 *.pth
 *.jpg

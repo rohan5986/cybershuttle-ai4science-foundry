@@ -1,0 +1,25 @@
+{
+  "model": "prithvi_eo_v2_300m",
+  "source": "ibm-nasa-geospatial/Prithvi-EO-2.0 via TerraTorch BACKBONE_REGISTRY",
+  "expected_bands": [
+    "B02",
+    "B03",
+    "B04",
+    "B05",
+    "B06",
+    "B07"
+  ],
+  "expected_units": "HLS V2 reflectance",
+  "satmae_input": "3-band JPEG 0-255 AOI crops",
+  "steps": [
+    {
+      "step": "load",
+      "ok": false,
+      "error": "The model prithvi_eo_v2_300m could not be instantiated from any source.",
+      "traceback": "Traceback (most recent call last):\n  File \"/storage/ice1/0/8/rsinghal49/cybershuttle-ai4science-foundry/scripts/prithvi_probe.py\", line 91, in main\n    model = BACKBONE_REGISTRY.build(BACKBONE, pretrained=True)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/hice1/rsinghal49/scratch/envs/prithvi-eo/lib/python3.11/site-packages/terratorch/registry/registry.py\", line 94, in build\n    raise Exception(msg)\nException: The model prithvi_eo_v2_300m could not be instantiated from any source.\n"
+    }
+  ],
+  "device": "cuda",
+  "torch": "2.5.1+cu121",
+  "cuda": "12.1"
+}

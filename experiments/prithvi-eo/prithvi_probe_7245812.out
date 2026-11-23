@@ -1,0 +1,23 @@
+---------------------------------------
+Begin Slurm Prolog: Nov-22-2026 19:48:28
+Job ID:    7245812
+User ID:   rsinghal49
+Account:   coc
+Job name:  prithvi-probe
+Partition: coc-gpu
+QOS:       coc-ice
+---------------------------------------
+rgb=/home/hice1/rsinghal49/scratch/satmae-temporal/data/fmow/val/crop_field/crop_field_1021/crop_field_1021_0_rgb_crop_0.jpg device=cuda
+{"step": "load", "ok": false, "error": "The model prithvi_eo_v2_300m could not be instantiated from any source.", "traceback": "Traceback (most recent call last):\n  File \"/storage/ice1/0/8/rsinghal49/cybershuttle-ai4science-foundry/scripts/prithvi_probe.py\", line 91, in main\n    model = BACKBONE_REGISTRY.build(BACKBONE, pretrained=True)\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/hice1/rsinghal49/scratch/envs/prithvi-eo/lib/python3.11/site-packages/terratorch/registry/registry.py\", line 94, in build\n    raise Exception(msg)\nException: The model prithvi_eo_v2_300m could not be instantiated from any source.\n"}
+---------------------------------------
+Begin Slurm Epilog: Nov-22-2026 19:52:43
+Job ID:        7245812
+User ID:       rsinghal49
+Account:       coc
+Job name:      prithvi-probe
+Resources:     cpu=4,gres/gpu:l40s=1,mem=32G,node=1
+Rsrc Used:     cput=00:17:00,vmem=0,walltime=00:04:15,mem=1323452K,energy_used=0
+Partition:     coc-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-03-004-25-0
+---------------------------------------

@@ -1,0 +1,39 @@
+---------------------------------------
+Begin Slurm Prolog: Nov-22-2026 19:45:27
+Job ID:    7245811
+User ID:   rsinghal49
+Account:   coc
+Job name:  satmae-temporal-subset-padded
+Partition: coc-gpu
+QOS:       coc-ice
+---------------------------------------
+job=7245811 host=atl1-1-03-004-25-0.pace.gatech.edu date=2026-11-22T19:45:27-05:00 tag=subset_padded
+python 3.9.18
+torch 1.12.1
+cuda 11.3
+torchvision 0.13.1
+timm 0.3.2
+gpu NVIDIA L40S
+loaded /home/hice1/rsinghal49/scratch/satmae-temporal/weights/finetune_fmow_temporal.pth: missing=0 unexpected=0
+processed 80  running_top1=62.50
+processed 160  running_top1=61.88
+processed 240  running_top1=64.17
+processed 320  running_top1=64.69
+processed 400  running_top1=64.50
+processed 480  running_top1=65.00
+n=500 top1=65.20 top5=84.60 runtime_s=55.3 peak_gpu_gb=2.05 gpu=NVIDIA L40S
+wrote /home/hice1/rsinghal49/scratch/satmae-temporal/results/subset500-padded/metrics.json
+wrote /home/hice1/rsinghal49/scratch/satmae-temporal/results/subset500-padded/confusion_matrix.csv
+wall_seconds=105
+---------------------------------------
+Begin Slurm Epilog: Nov-22-2026 19:48:24
+Job ID:        7245811
+User ID:       rsinghal49
+Account:       coc
+Job name:      satmae-temporal-subset-padded
+Resources:     cpu=8,gres/gpu:l40s=1,mem=64G,node=1
+Rsrc Used:     cput=00:23:44,vmem=0,walltime=00:02:58,mem=9543204K,energy_used=0
+Partition:     coc-gpu
+QOS:           coc-ice
+Nodes:         atl1-1-03-004-25-0
+---------------------------------------

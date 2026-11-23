@@ -1,0 +1,10 @@
+Disabling torch because diffusers requires `torch>=2.6` but found version 2.5.1+cu121. Upgrade it with `pip install -U 'torch>=2.6'`.
+Traceback (most recent call last):
+  File "/storage/ice1/0/8/rsinghal49/cybershuttle-ai4science-foundry/scripts/prithvi_probe.py", line 196, in <module>
+    main()
+  File "/storage/ice1/0/8/rsinghal49/cybershuttle-ai4science-foundry/scripts/prithvi_probe.py", line 91, in main
+    model = BACKBONE_REGISTRY.build(BACKBONE, pretrained=True)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/hice1/rsinghal49/scratch/envs/prithvi-eo/lib/python3.11/site-packages/terratorch/registry/registry.py", line 94, in build
+    raise Exception(msg)
+Exception: The model prithvi_eo_v2_300m could not be instantiated from any source.

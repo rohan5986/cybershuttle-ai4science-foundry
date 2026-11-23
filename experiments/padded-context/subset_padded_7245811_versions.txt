@@ -1,0 +1,6 @@
+python 3.9.18
+torch 1.12.1
+cuda 11.3
+torchvision 0.13.1
+timm 0.3.2
+gpu NVIDIA L40S
